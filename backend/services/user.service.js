@@ -1,3 +1,6 @@
+//user.services.js
+// database mein user create karne ke liye service file
+
 const userModel = require("../models/user.model");
 
 module.exports.createUser = async ({

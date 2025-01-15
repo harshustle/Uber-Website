@@ -1,3 +1,4 @@
+//app.js
 const dotenv = require("dotenv");                // Import the 'dotenv' module to manage environment variables.
 dotenv.config();                                 // Load environment variables from a .env file into process.env.
 const connectToDb = require("./db/db");          // Import the 'db' module to manage environment variables
