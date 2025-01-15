@@ -6,7 +6,7 @@ const app = require('./app');
 
 // Set the port number for the server to listen on.
 // Use the value from the environment variable 'PORT', or default to 3000 if not defined.
-const port = process.env.PORT || 3000;
+const port =  process.env.PORT || 5000;
 
 // Create an HTTP server instance and pass the 'app' module as the request listener.
 const server = http.createServer(app);
