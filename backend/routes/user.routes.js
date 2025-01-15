@@ -21,4 +21,9 @@ router.post(
   userController.registerUser
 );
 
+router.post("/login",[
+    body("email").isEmail().normalizeEmail(),
+    body("password").isLength({ min: 6 }),
+] ,userController.loginUser);
+
 module.exports = router;
