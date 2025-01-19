@@ -183,3 +183,117 @@ Example:
 
 ### Error Handling
 The error responses are designed to provide clear and concise information about what went wrong. Validation errors will specify which fields are invalid and why. Authentication errors will indicate incorrect email or password. Server errors will return a generic message indicating an internal issue.
+
+# User Profile Endpoint
+
+## GET /users/profile
+
+### Description
+This endpoint is used to retrieve the profile of the authenticated user.
+
+### Request Headers
+- `Authorization`: A string containing the Bearer token.
+
+Example:
+```
+Authorization: Bearer <token>
+```
+
+### Responses
+
+#### Success
+- **Status Code**: 200 OK
+- **Response Body**: A JSON object containing the user's profile information.
+
+Example:
+```json
+{
+  "user": {
+    "_id": "60c72b2f9b1d4c3a4c8e4e3b",
+    "fullName": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "socketId": "socket123"
+  }
+}
+```
+
+#### Authentication Error
+- **Status Code**: 401 Unauthorized
+- **Response Body**: A JSON object containing the error message.
+
+Example:
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+#### Server Error
+- **Status Code**: 500 Internal Server Error
+- **Response Body**: A JSON object containing the error message.
+
+Example:
+```json
+{
+  "error": "Internal Server Error"
+}
+```
+
+### Error Handling
+The error responses are designed to provide clear and concise information about what went wrong. Authentication errors will indicate missing or invalid tokens. Server errors will return a generic message indicating an internal issue.
+
+# User Logout Endpoint
+
+## GET /users/logout
+
+### Description
+Logout the current user and blacklist the token provided in cookie or headers
+
+### Request Headers
+- `Authorization`: A string containing the Bearer token.
+
+Example:
+```
+Authorization: Bearer <token>
+```
+
+### Responses
+
+#### Success
+- **Status Code**: 200 OK
+- **Response Body**: A JSON object containing a success message.
+
+Example:
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+#### Authentication Error
+- **Status Code**: 401 Unauthorized
+- **Response Body**: A JSON object containing the error message.
+
+Example:
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+#### Server Error
+- **Status Code**: 500 Internal Server Error
+- **Response Body**: A JSON object containing the error message.
+
+Example:
+```json
+{
+  "error": "Internal Server Error"
+}
+```
+
+### Error Handling
+The error responses are designed to provide clear and concise information about what went wrong. Authentication errors will indicate missing or invalid tokens. Server errors will return a generic message indicating an internal issue.
