@@ -2,7 +2,7 @@
 const userModel = require("../models/user.model");
 const userService = require("../services/user.service");
 const { validationResult } = require("express-validator");
-const blacklistTokenSchema = require("../models/blacklistToken.model");
+const blacklistTokenSchema = require("../models/blackListToken.model");
 
 module.exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req);
@@ -11,6 +11,10 @@ module.exports.registerUser = async (req, res, next) => {
   }
 
   const { fullName, email, password, socketId } = req.body;
+  const isUserAlready = await userModel.findOne({ email });
+  if (isUserAlready) {
+    return res.status(409).json({ message: "Email already exists" });
+  }
   const hashPassword = await userModel.hashPassword(password);
 
   const user = await userService.createUser({

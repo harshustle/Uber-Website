@@ -6,6 +6,7 @@ connectToDb();                                   // Load environment variables f
 const express = require("express");              // Import the 'express' module to create a web server.
 const cors = require("cors");                    // Import 'cors' middleware to enable Cross-Origin Resource Sharing.
 const userRoutes = require('./routes/user.routes');
+const captainRoutes = require('./routes/captain.routes');
 const cookieParser = require('cookie-parser');
 
 const app = express();                           // Create an instance of an Express application.
@@ -18,6 +19,7 @@ app.use(cookieParser());
 app.get("/", (req, res) => {                     // Define a GET route for the root URL ("/").
   res.send("Hello, this is the Uber API!");      // Send a response with a message to the client.
 });
-app.use('/users',userRoutes)
+app.use('/users',userRoutes);
+app.use('/captains', captainRoutes);
 
 module.exports = app;                            // Export the 'app' instance to be used in other modules.
