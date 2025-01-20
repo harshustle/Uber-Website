@@ -298,11 +298,7 @@ Example:
 ### Error Handling
 The error responses are designed to provide clear and concise information about what went wrong. Authentication errors will indicate missing or invalid tokens. Server errors will return a generic message indicating an internal issue.
 
-
-# Uber Website
-
-// ...existing content...
-
+# Captain
 ## Captain Routes Documentation
 
 ### Register Captain
@@ -391,4 +387,3 @@ The error responses are designed to provide clear and concise information about 
 - `200 OK`: Returns a success message.
 - `401 Unauthorized`: If the captain is not authenticated.
 
-// ...existing content...
