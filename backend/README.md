@@ -387,3 +387,105 @@ The error responses are designed to provide clear and concise information about 
 - `200 OK`: Returns a success message.
 - `401 Unauthorized`: If the captain is not authenticated.
 
+# Ride Routes Documentation
+
+## Create Ride
+
+### POST /create
+
+**Description:** Creates a new ride.
+
+**Request Body:**
+```json
+{
+  "pickup": "string",
+  "destination": "string",
+  "vehicleType": "string"
+}
+```
+
+**Validations:**
+- `pickup` must be a valid string with at least 3 characters.
+- `destination` must be a valid string with at least 3 characters.
+- `vehicleType` must be one of `['auto', 'car', 'moto']`.
+
+**Responses:**
+- `201 Created`: Returns the created ride.
+- `400 Bad Request`: If any validation fails.
+
+## Get Fare
+
+### GET /get-fare
+
+**Description:** Retrieves the fare for a ride.
+
+**Query Parameters:**
+- `pickup`: A string representing the pickup location.
+- `destination`: A string representing the destination location.
+
+**Validations:**
+- `pickup` must be a valid string with at least 3 characters.
+- `destination` must be a valid string with at least 3 characters.
+
+**Responses:**
+- `200 OK`: Returns the fare for the ride.
+- `400 Bad Request`: If any validation fails.
+
+## Confirm Ride
+
+### POST /confirm
+
+**Description:** Confirms a ride.
+
+**Request Body:**
+```json
+{
+  "rideId": "string"
+}
+```
+
+**Validations:**
+- `rideId` must be a valid MongoDB ObjectId.
+
+**Responses:**
+- `200 OK`: Returns the confirmed ride.
+- `400 Bad Request`: If any validation fails.
+
+## Start Ride
+
+### GET /start-ride
+
+**Description:** Starts a ride.
+
+**Query Parameters:**
+- `rideId`: A string representing the ride ID.
+- `otp`: A string representing the OTP.
+
+**Validations:**
+- `rideId` must be a valid MongoDB ObjectId.
+- `otp` must be a valid string with exactly 6 characters.
+
+**Responses:**
+- `200 OK`: Returns the started ride.
+- `400 Bad Request`: If any validation fails.
+
+## End Ride
+
+### POST /end-ride
+
+**Description:** Ends a ride.
+
+**Request Body:**
+```json
+{
+  "rideId": "string"
+}
+```
+
+**Validations:**
+- `rideId` must be a valid MongoDB ObjectId.
+
+**Responses:**
+- `200 OK`: Returns the ended ride.
+- `400 Bad Request`: If any validation fails.
+

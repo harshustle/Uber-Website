@@ -7,6 +7,7 @@ const express = require("express");              // Import the 'express' module 
 const cors = require("cors");                    // Import 'cors' middleware to enable Cross-Origin Resource Sharing.
 const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
+const riderRoutes = require('./routes/ride.routes');
 const cookieParser = require('cookie-parser');
 
 const app = express();                           // Create an instance of an Express application.
@@ -21,5 +22,6 @@ app.get("/", (req, res) => {                     // Define a GET route for the r
 });
 app.use('/users',userRoutes);
 app.use('/captains', captainRoutes);
+app.use('/riders', riderRoutes);
 
 module.exports = app;                            // Export the 'app' instance to be used in other modules.
