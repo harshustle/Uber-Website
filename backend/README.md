@@ -489,3 +489,153 @@ The error responses are designed to provide clear and concise information about 
 - `200 OK`: Returns the ended ride.
 - `400 Bad Request`: If any validation fails.
 
+# Map Routes Documentation
+
+## Get Coordinates
+
+### GET /maps/get-coordinates
+
+**Description:** Retrieves the coordinates for a given address.
+
+**Query Parameters:**
+- `address`: A string representing the address.
+
+**Validations:**
+- `address` must be a valid string with at least 3 characters.
+
+**Responses:**
+- `200 OK`: Returns the coordinates for the address.
+- `400 Bad Request`: If any validation fails.
+- `404 Not Found`: If coordinates are not found.
+
+## Get Distance and Time
+
+### GET /maps/get-distance-time
+
+**Description:** Retrieves the distance and time between two locations.
+
+**Query Parameters:**
+- `origin`: A string representing the origin location.
+- `destination`: A string representing the destination location.
+
+**Validations:**
+- `origin` must be a valid string with at least 3 characters.
+- `destination` must be a valid string with at least 3 characters.
+
+**Responses:**
+- `200 OK`: Returns the distance and time between the locations.
+- `400 Bad Request`: If any validation fails.
+- `404 Not Found`: If no routes are found.
+
+## Get AutoComplete Suggestions
+
+### GET /maps/get-suggestions
+
+**Description:** Retrieves autocomplete suggestions for a given input.
+
+**Query Parameters:**
+- `input`: A string representing the input query.
+
+**Validations:**
+- `input` must be a valid string with at least 3 characters.
+
+**Responses:**
+- `200 OK`: Returns the autocomplete suggestions.
+- `400 Bad Request`: If any validation fails.
+- `404 Not Found`: If no suggestions are found.
+
+# Server Documentation
+
+## Server Initialization
+
+The server is initialized using the `http` module and the Express app. The socket is also initialized with the server.
+
+**File:** `/backend/server.js`
+
+**Code:**
+```javascript
+const http = require('http');
+const app = require('./app');
+const { initializeSocket } = require('./socket');
+const port = process.env.PORT || 3000;
+
+const server = http.createServer(app);
+
+initializeSocket(server);
+
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+```
+
+# Socket Documentation
+
+## Socket Initialization
+
+The socket is initialized using the `socket.io` library. It handles various events such as connection, join, update-location-captain, and disconnect.
+
+**File:** `/backend/socket.js`
+
+**Code:**
+```javascript
+const socketIo = require('socket.io');
+const userModel = require('./models/user.model');
+const captainModel = require('./models/captain.model');
+
+let io;
+
+function initializeSocket(server) {
+    io = socketIo(server, {
+        cors: {
+            origin: '*',
+            methods: [ 'GET', 'POST' ]
+        }
+    });
+
+    io.on('connection', (socket) => {
+        console.log(`Client connected: ${socket.id}`);
+
+        socket.on('join', async (data) => {
+            const { userId, userType } = data;
+
+            if (userType === 'user') {
+                await userModel.findByIdAndUpdate(userId, { socketId: socket.id });
+            } else if (userType === 'captain') {
+                await captainModel.findByIdAndUpdate(userId, { socketId: socket.id });
+            }
+        });
+
+        socket.on('update-location-captain', async (data) => {
+            const { userId, location } = data;
+
+            if (!location || !location.ltd || !location.lng) {
+                return socket.emit('error', { message: 'Invalid location data' });
+            }
+
+            await captainModel.findByIdAndUpdate(userId, {
+                location: {
+                    ltd: location.ltd,
+                    lng: location.lng
+                }
+            });
+        });
+
+        socket.on('disconnect', () => {
+            console.log(`Client disconnected: ${socket.id}`);
+        });
+    });
+}
+
+const sendMessageToSocketId = (socketId, messageObject) => {
+    console.log(messageObject);
+
+    if (io) {
+        io.to(socketId).emit(messageObject.event, messageObject.data);
+    } else {
+        console.log('Socket.io not initialized.');
+    }
+}
+
+module.exports = { initializeSocket, sendMessageToSocketId };
+```
+
