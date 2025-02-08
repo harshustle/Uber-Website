@@ -19,22 +19,23 @@ const UserSignup = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
     const newUser = {
-      fullname: {
-        firstname: firstName,
-        lastname: lastName
+      fullName: {
+        firstName: firstName,
+        lastName: lastName
       },
       email: email,
       password: password
     }
+    console.log(newUser);
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
+    // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
 
-    if (response.status === 201) {
-      const data = response.data
-      setUser(data.user)
-      localStorage.setItem('token', data.token)
-      navigate('/home')
-    }
+    // if (response.status === 201) {
+    //   const data = response.data
+    //   setUser(data.user)
+    //   localStorage.setItem('token', data.token)
+    //   navigate('/home')
+    // }
 
 
     setEmail('')
@@ -49,10 +50,7 @@ const UserSignup = () => {
         <div>
           <img className='w-16 mb-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
 
-          <form onSubmit={(e) => {
-            submitHandler(e)
-          }}>
-
+          <form onSubmit={(e) => {submitHandler(e) }}>
             <h3 className='text-lg w-1/2  font-medium mb-2'>What's your name</h3>
             <div className='flex gap-4 mb-7'>
               <input
@@ -107,7 +105,7 @@ const UserSignup = () => {
           {/* already have an account */}
           <p className='text-center'>Already have a account? <Link to='/login' className='text-blue-600'>Login here</Link></p>
         </div>
-        
+
         <div>
           <p className='text-[10px] leading-tight'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
             Policy</span> and <span className='underline'>Terms of Service apply</span>.</p>

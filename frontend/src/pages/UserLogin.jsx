@@ -11,7 +11,7 @@ const UserLogin = () => {
 
   // const { user, setUser } = useContext(UserDataContext)
   const navigate = useNavigate()
-  15
+  
   const submitHandler = async (e) => {
     e.preventDefault();
     const userData = {
@@ -20,14 +20,14 @@ const UserLogin = () => {
     }
     console.log(userData)
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
+    // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
 
-    if (response.status === 200) {
-      const data = response.data
-      setUser(data.user)
-      localStorage.setItem('token', data.token)
-      navigate('/home')
-    }
+    // if (response.status === 200) {
+    //   const data = response.data
+    //   setUser(data.user)
+    //   localStorage.setItem('token', data.token)
+    //   navigate('/home')
+    // }
 
 
     setEmail('')
