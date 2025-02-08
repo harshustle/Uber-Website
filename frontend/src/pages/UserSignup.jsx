@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { UserDataContext } from '../../context/UserContext'
+// import { UserDataContext } from '../../context/UserContext'
 
 
 
@@ -14,12 +14,7 @@ const UserSignup = () => {
 
   const navigate = useNavigate()
 
-
-
-  const { user, setUser } = useContext(UserDataContext)
-
-
-
+  // const { user, setUser } = useContext(UserDataContext)
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -95,7 +90,6 @@ const UserSignup = () => {
             />
 
             <h3 className='text-lg font-medium mb-2'>Enter Password</h3>
-
             <input
               className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
               value={password}
@@ -109,10 +103,11 @@ const UserSignup = () => {
             <button
               className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
             >Create account</button>
-
           </form>
+          {/* already have an account */}
           <p className='text-center'>Already have a account? <Link to='/login' className='text-blue-600'>Login here</Link></p>
         </div>
+        
         <div>
           <p className='text-[10px] leading-tight'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
             Policy</span> and <span className='underline'>Terms of Service apply</span>.</p>
