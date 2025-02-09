@@ -22,8 +22,14 @@ const UserLogin = () => {
 
     try{
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
+      
+      console.log(response.data)
+      console.log("Full response:", response);
+      console.log("Response data:", response.data);
 
-      if (response.status === 200) {
+
+
+      if (response.data.token) {
         const data = response.data
         setUser(data.user)
         localStorage.setItem('token', data.token)
@@ -39,6 +45,7 @@ const UserLogin = () => {
     }
     catch(error){
       console.error('Error during login:', error)
+      alert(error.response?.data?.message || 'Something went wrong. Please try again.');
     }
   }
 
